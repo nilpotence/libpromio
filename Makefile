@@ -28,4 +28,6 @@ copyDir:
 clean:
 	rm -Rf build/*
 	rm -Rf dist/*
+	mkdir -p build
+	mkdir -p dist
 	mkdir build/obj

@@ -7,17 +7,19 @@
 
 int main(int argc, char * argv[]){
 
-	promio_peer_t * peer = promio_peer_create("HRI");
-
+	//Create Peer
+	promio_peer_t * peer = promio_peer_create("PeerA");
 	printf("Peer %s created !\n", peer->name);
 
+	//Create I/Os
 	promio_input_t * input1 = promio_input_create(peer, "ctrl.speed", 1);
 	promio_output_t * output1 = promio_output_create(peer, "common.led", 3);
 
+	//List all registered I/Os
 	printf("\n%s I/Os :\n", peer->name);
-	promio_list_iterator_t * it = promio_list_it_create(peer->ios);
-	while(promio_list_it_has_next(it)){
-		promio_io_t * io = (promio_io_t*)promio_list_it_next(it);
+	promio_iterator_t * it = promio_iterator_create(peer->ios);
+	while(promio_iterator_has_next(it)){
+		promio_io_t * io = (promio_io_t*)promio_iterator_next(it);
 
 		if(io->type == PROMIO_TYPE_INPUT)
 			printf("	input : ");
@@ -26,8 +28,17 @@ int main(int argc, char * argv[]){
 
 		printf("%s, size : %i\n", io->name, io->size);
 	}
-	promio_list_it_destroy(it);
+	promio_iterator_destroy(it);
 
+
+	//start peer
+	promio_peer_start(peer);
+
+
+	//stop peer
+	promio_peer_stop(peer);
+
+	//clean data
 	promio_input_destroy(peer, input1);
 	promio_output_destroy(peer, output1);
 	promio_peer_destroy(peer);

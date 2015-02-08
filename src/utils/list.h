@@ -43,7 +43,7 @@
 
 		int position; /*!< current position of the iterator in the list */
 
-	} promio_list_iterator_t;
+	} promio_iterator_t;
 
 
 	typedef void (*iterate_collection_func)(void * elem, void * data); /*!< function applied on each element of a collection */
@@ -64,16 +64,16 @@
 	void				promio_list_iterate(promio_list_t * list, iterate_collection_func func, void * user_data);
 
 
-	promio_list_iterator_t *		promio_list_it_create(promio_list_t * list);
-	void							promio_list_it_destroy(promio_list_iterator_t * it);
-	void							promio_list_it_reset(promio_list_iterator_t * it);
+	promio_iterator_t *		promio_iterator_create(promio_list_t * list);
+	void							promio_iterator_destroy(promio_iterator_t * it);
+	void							promio_iterator_reset(promio_iterator_t * it);
 
-	int 							promio_list_it_has_next(promio_list_iterator_t * it);
-	int								promio_list_it_position(promio_list_iterator_t * it);
+	int 							promio_iterator_has_next(promio_iterator_t * it);
+	int								promio_iterator_position(promio_iterator_t * it);
 
-	void *							promio_list_it_next(promio_list_iterator_t * it);
+	void *							promio_iterator_next(promio_iterator_t * it);
 
-	void							promio_list_it_remove(promio_list_iterator_t * it);
-	void							promio_list_it_add(promio_list_iterator_t * it, void * value);
+	void							promio_iterator_remove(promio_iterator_t * it);
+	void							promio_iterator_add(promio_iterator_t * it, void * value);
 
 #endif /* __PROMIO_LIST_H */

@@ -181,11 +181,11 @@ void promio_list_iterate(promio_list_t * list, iterate_collection_func func, voi
  * @param list list that will be iterated by the new iterator
  * @return iterator created
  */
-promio_list_iterator_t * promio_list_it_create(promio_list_t * list){
-	promio_list_iterator_t * it;
-	it = (promio_list_iterator_t*) malloc(sizeof(promio_list_iterator_t));
+promio_iterator_t * promio_iterator_create(promio_list_t * list){
+	promio_iterator_t * it;
+	it = (promio_iterator_t*) malloc(sizeof(promio_iterator_t));
 	it->list = list;
-	promio_list_it_reset(it);
+	promio_iterator_reset(it);
 
 	return it;
 }
@@ -194,7 +194,7 @@ promio_list_iterator_t * promio_list_it_create(promio_list_t * list){
  * Free a given iterator
  * @param it iterator to free
  */
-void promio_list_it_destroy(promio_list_iterator_t * it){
+void promio_iterator_destroy(promio_iterator_t * it){
 	free(it);
 }
 
@@ -202,7 +202,7 @@ void promio_list_it_destroy(promio_list_iterator_t * it){
  * Reset position to -1 for a given iterator
  * @param it
  */
-void promio_list_it_reset(promio_list_iterator_t * it){
+void promio_iterator_reset(promio_iterator_t * it){
 	it->cur = EMPTY_LIST;
 	it->prev = EMPTY_LIST;
 	it->next = it->list->first;
@@ -215,7 +215,7 @@ void promio_list_it_reset(promio_list_iterator_t * it){
  * @param it iterator given
  * @return
  */
-int promio_list_it_has_next(promio_list_iterator_t * it){
+int promio_iterator_has_next(promio_iterator_t * it){
 	return it->next != EMPTY_LIST;
 }
 
@@ -227,7 +227,7 @@ int promio_list_it_has_next(promio_list_iterator_t * it){
  * @param it iterator to forward
  * @return the next value of the given iterator
  */
-void *	promio_list_it_next(promio_list_iterator_t * it){
+void *	promio_iterator_next(promio_iterator_t * it){
 	it->prev = it->cur;
 	it->cur = it->next;
 	it->next = it->next->next;
@@ -242,7 +242,7 @@ void *	promio_list_it_next(promio_list_iterator_t * it){
  * @param it iterator
  * @return the current position
  */
-int promio_list_it_position(promio_list_iterator_t * it){
+int promio_iterator_position(promio_iterator_t * it){
 	return it->position;
 }
 
@@ -251,7 +251,7 @@ int promio_list_it_position(promio_list_iterator_t * it){
  * and move iterator to the previous val
  * @param it given iterator
  */
-void promio_list_it_remove(promio_list_iterator_t * it){
+void promio_iterator_remove(promio_iterator_t * it){
 
 	if(it->position == 0){
 		it->list->first = promio_list_freeElem(it->cur);
@@ -275,7 +275,7 @@ void promio_list_it_remove(promio_list_iterator_t * it){
  * @param it given iterator
  * @param value value to add
  */
-void promio_list_it_add(promio_list_iterator_t * it, void * value){
+void promio_iterator_add(promio_iterator_t * it, void * value){
 
 	if(it->position == -1) return;
 	if(it->position == 0){

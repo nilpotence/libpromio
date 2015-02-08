@@ -13,9 +13,9 @@ OBJ=$(addprefix build/obj/, $(SRC:.c=.o))
 .PHONY: all clean
 
 
-test: lib tests/test.c
-	gcc -Idist/includes -Ldist tests/test.c -o tests/test -lpromio
-
+test: lib tests/peerA.c tests/peerB.c
+	gcc -Idist/includes -Ldist tests/peerA.c -o tests/peerA -lpromio
+	gcc -Idist/includes -Ldist tests/peerB.c -o tests/peerB -lpromio
 
 lib: copyDir copyHeaders dist/libpromio.so
 
